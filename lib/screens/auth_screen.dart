@@ -64,31 +64,32 @@ class _AuthScreenState extends State<AuthScreen> {
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 430),
+                constraints: const BoxConstraints(maxWidth: 400),
                 child: Column(
                   children: [
                     const Text(
-                      '✦ LÚMEN',
+                      'Lúmen',
                       style: TextStyle(
-                        fontSize: 38,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 4,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: -0.6,
                         color: LumenColors.text,
                       ),
                     ),
                     const SizedBox(height: 6),
                     const Text(
-                      'agenda de luz — tarefas que brilham no dia certo',
+                      'Entre para ver o calendário e as tarefas do dia.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: LumenColors.muted),
+                      style: TextStyle(color: LumenColors.muted, fontSize: 14),
                     ),
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 24),
                     GlassCard(
                       child: Form(
                         key: _formKey,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             _ModeToggle(
                               registerMode: _registerMode,
@@ -100,13 +101,13 @@ class _AuthScreenState extends State<AuthScreen> {
                               },
                             ),
                             const SizedBox(height: 20),
-                            if (_registerMode)
+                            if (_registerMode) ...[
+                              const _FieldLabel('Nome'),
                               TextFormField(
                                 controller: _name,
                                 textInputAction: TextInputAction.next,
                                 decoration: const InputDecoration(
-                                  labelText: 'Nome',
-                                  prefixIcon: Icon(Icons.person_outline),
+                                  hintText: 'Seu nome',
                                 ),
                                 validator: (value) {
                                   if (value == null || value.trim().length < 2) {
@@ -115,14 +116,15 @@ class _AuthScreenState extends State<AuthScreen> {
                                   return null;
                                 },
                               ),
-                            if (_registerMode) const SizedBox(height: 12),
+                              const SizedBox(height: 14),
+                            ],
+                            const _FieldLabel('E-mail'),
                             TextFormField(
                               controller: _email,
                               keyboardType: TextInputType.emailAddress,
                               textInputAction: TextInputAction.next,
                               decoration: const InputDecoration(
-                                labelText: 'E-mail',
-                                prefixIcon: Icon(Icons.alternate_email),
+                                hintText: 'voce@email.com',
                               ),
                               validator: (value) {
                                 final email = value?.trim() ?? '';
@@ -132,14 +134,14 @@ class _AuthScreenState extends State<AuthScreen> {
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 14),
+                            const _FieldLabel('Senha'),
                             TextFormField(
                               controller: _password,
                               obscureText: true,
                               onFieldSubmitted: (_) => _submit(),
                               decoration: const InputDecoration(
-                                labelText: 'Senha',
-                                prefixIcon: Icon(Icons.lock_outline),
+                                hintText: 'Mínimo 6 caracteres',
                               ),
                               validator: (value) {
                                 if (value == null || value.length < 6) {
@@ -152,12 +154,21 @@ class _AuthScreenState extends State<AuthScreen> {
                               const SizedBox(height: 12),
                               Text(
                                 _formError!,
-                                style: const TextStyle(color: LumenColors.pink),
+                                style: const TextStyle(
+                                  color: LumenColors.destructive,
+                                  fontSize: 13,
+                                ),
                               ),
                             ],
                             const SizedBox(height: 20),
                             if (_busy)
-                              const CircularProgressIndicator()
+                              const Center(
+                                child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                ),
+                              )
                             else
                               LumenButton(
                                 label: _registerMode ? 'Criar conta' : 'Entrar',
@@ -178,6 +189,27 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 }
 
+class _FieldLabel extends StatelessWidget {
+  const _FieldLabel(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: LumenColors.text,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+}
+
 class _ModeToggle extends StatelessWidget {
   const _ModeToggle({
     required this.registerMode,
@@ -192,8 +224,8 @@ class _ModeToggle extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: const Color(0x22000000),
-        borderRadius: BorderRadius.circular(18),
+        color: LumenColors.accent,
+        borderRadius: BorderRadius.circular(LumenTheme.radius),
       ),
       child: Row(
         children: [
@@ -209,22 +241,19 @@ class _ModeToggle extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          duration: const Duration(milliseconds: 160),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            gradient: active
-                ? const LinearGradient(
-                    colors: [LumenColors.teal, LumenColors.violet],
-                  )
-                : null,
+            borderRadius: BorderRadius.circular(6),
+            color: active ? LumenColors.background : Colors.transparent,
           ),
           child: Text(
             label,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontWeight: FontWeight.w800,
-              color: active ? const Color(0xFF07101C) : LumenColors.muted,
+              fontWeight: FontWeight.w500,
+              fontSize: 13,
+              color: active ? LumenColors.text : LumenColors.muted,
             ),
           ),
         ),

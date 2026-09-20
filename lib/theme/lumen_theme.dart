@@ -1,68 +1,81 @@
 import 'package:flutter/material.dart';
 
 class LumenColors {
-  static const background = Color(0xFF070B18);
-  static const teal = Color(0xFF00E5C0);
-  static const violet = Color(0xFF7B61FF);
-  static const pink = Color(0xFFFF4D8D);
-  static const text = Color(0xFFF4F7FF);
-  static const muted = Color(0xFF8B93B0);
-  static const glass = Color(0x22FFFFFF);
-  static const glassBorder = Color(0x33FFFFFF);
+  static const background = Color(0xFF09090B);
+  static const card = Color(0xFF18181B);
+  static const border = Color(0xFF27272A);
+  static const text = Color(0xFFFAFAFA);
+  static const muted = Color(0xFFA1A1AA);
+  static const primary = Color(0xFFFAFAFA);
+  static const primaryForeground = Color(0xFF18181B);
+  static const accent = Color(0xFF27272A);
+  static const destructive = Color(0xFFEF4444);
+  static const ring = Color(0xFFD4D4D8);
 }
 
 class LumenTheme {
+  static const radius = 8.0;
+  static const cardRadius = 12.0;
+
   static ThemeData dark() {
     const scheme = ColorScheme.dark(
-      primary: LumenColors.teal,
-      secondary: LumenColors.violet,
-      tertiary: LumenColors.pink,
+      primary: LumenColors.primary,
+      onPrimary: LumenColors.primaryForeground,
+      secondary: LumenColors.accent,
+      onSecondary: LumenColors.text,
       surface: LumenColors.background,
       onSurface: LumenColors.text,
-      onPrimary: Color(0xFF04120F),
+      error: LumenColors.destructive,
+      outline: LumenColors.border,
     );
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
       colorScheme: scheme,
       scaffoldBackgroundColor: LumenColors.background,
+      dividerColor: LumenColors.border,
       textTheme: const TextTheme(
         displaySmall: TextStyle(
-          fontWeight: FontWeight.w800,
-          letterSpacing: 1.4,
+          fontWeight: FontWeight.w600,
+          letterSpacing: -0.4,
           color: LumenColors.text,
         ),
         headlineMedium: TextStyle(
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
           color: LumenColors.text,
         ),
         titleLarge: TextStyle(
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
           color: LumenColors.text,
         ),
-        bodyLarge: TextStyle(color: LumenColors.text, height: 1.4),
-        bodyMedium: TextStyle(color: LumenColors.muted, height: 1.4),
+        bodyLarge: TextStyle(color: LumenColors.text, height: 1.45),
+        bodyMedium: TextStyle(color: LumenColors.muted, height: 1.45),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: const Color(0x330B1026),
-        hintStyle: const TextStyle(color: LumenColors.muted),
-        labelStyle: const TextStyle(color: LumenColors.muted),
+        fillColor: LumenColors.background,
+        hintStyle: const TextStyle(color: LumenColors.muted, fontSize: 14),
+        labelStyle: const TextStyle(color: LumenColors.muted, fontSize: 14),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: const BorderSide(color: LumenColors.glassBorder),
+          borderRadius: BorderRadius.circular(radius),
+          borderSide: const BorderSide(color: LumenColors.border),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: const BorderSide(color: LumenColors.glassBorder),
+          borderRadius: BorderRadius.circular(radius),
+          borderSide: const BorderSide(color: LumenColors.border),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: const BorderSide(color: LumenColors.teal, width: 1.6),
+          borderRadius: BorderRadius.circular(radius),
+          borderSide: const BorderSide(color: LumenColors.ring, width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: const BorderSide(color: LumenColors.pink),
+          borderRadius: BorderRadius.circular(radius),
+          borderSide: const BorderSide(color: LumenColors.destructive),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius),
+          borderSide: const BorderSide(color: LumenColors.destructive),
         ),
       ),
     );

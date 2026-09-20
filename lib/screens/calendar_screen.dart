@@ -47,7 +47,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       body: AuroraBackdrop(
         child: SafeArea(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
             children: [
               Row(
                 children: [
@@ -58,14 +58,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         Text(
                           'Olá, $name',
                           style: const TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.w800,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.4,
                             color: LumenColors.text,
                           ),
                         ),
                         const Text(
-                          'escolha um dia e acenda as tarefas',
-                          style: TextStyle(color: LumenColors.muted),
+                          'Toque um dia para abrir as tarefas.',
+                          style: TextStyle(color: LumenColors.muted, fontSize: 14),
                         ),
                       ],
                     ),
@@ -74,12 +75,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     onPressed: () => context.read<AuthStore>().logout(),
                     child: const Text(
                       'Sair',
-                      style: TextStyle(color: LumenColors.pink),
+                      style: TextStyle(
+                        color: LumenColors.muted,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 16),
               GlassCard(
                 child: LumenCalendar(
                   visibleMonth: _visibleMonth,
@@ -104,10 +108,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               const Text(
-                'Dias com ponto rosa já têm tarefas. Toque no dia para abrir a lista.',
-                style: TextStyle(color: LumenColors.muted),
+                'Dias com ponto já têm tarefa.',
+                style: TextStyle(color: LumenColors.muted, fontSize: 13),
               ),
             ],
           ),

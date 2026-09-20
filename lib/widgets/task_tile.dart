@@ -19,11 +19,11 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 8),
       child: Opacity(
-        opacity: task.done ? 0.62 : 1,
+        opacity: task.done ? 0.7 : 1,
         child: GlassCard(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          padding: const EdgeInsets.fromLTRB(12, 8, 4, 8),
           child: Row(
             children: [
               Semantics(
@@ -33,25 +33,24 @@ class TaskTile extends StatelessWidget {
                     : 'Concluir ${task.title}',
                 child: InkWell(
                   onTap: onToggle,
-                  customBorder: const CircleBorder(),
+                  borderRadius: BorderRadius.circular(4),
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 180),
-                    width: 28,
-                    height: 28,
+                    duration: const Duration(milliseconds: 140),
+                    width: 18,
+                    height: 18,
                     decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: task.done
-                          ? const LinearGradient(
-                              colors: [LumenColors.teal, LumenColors.violet],
-                            )
-                          : null,
+                      borderRadius: BorderRadius.circular(4),
+                      color: task.done ? LumenColors.primary : Colors.transparent,
                       border: Border.all(
-                        color: task.done ? Colors.transparent : LumenColors.teal,
-                        width: 2,
+                        color: task.done ? LumenColors.primary : LumenColors.muted,
                       ),
                     ),
                     child: task.done
-                        ? const Icon(Icons.check, size: 16, color: Color(0xFF07101C))
+                        ? const Icon(
+                            Icons.check,
+                            size: 12,
+                            color: LumenColors.primaryForeground,
+                          )
                         : null,
                   ),
                 ),
@@ -61,8 +60,8 @@ class TaskTile extends StatelessWidget {
                 child: Text(
                   task.title,
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                     color: LumenColors.text,
                     decoration: task.done ? TextDecoration.lineThrough : null,
                     decorationColor: LumenColors.muted,
@@ -72,7 +71,7 @@ class TaskTile extends StatelessWidget {
               IconButton(
                 tooltip: 'Remover tarefa',
                 onPressed: onRemove,
-                icon: const Icon(Icons.close_rounded, color: LumenColors.pink),
+                icon: const Icon(Icons.close, size: 16, color: LumenColors.muted),
               ),
             ],
           ),

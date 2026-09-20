@@ -46,13 +46,13 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: const Color(0xF10B1026),
+      backgroundColor: LumenColors.card,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28),
-        side: const BorderSide(color: LumenColors.glassBorder),
+        borderRadius: BorderRadius.circular(LumenTheme.cardRadius),
+        side: const BorderSide(color: LumenColors.border),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(22, 22, 22, 18),
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,35 +60,43 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
             const Text(
               'Nova tarefa',
               style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w800,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
                 color: LumenColors.text,
               ),
             ),
             const SizedBox(height: 6),
             const Text(
-              'Ela entra como pendente e você marca depois, se quiser.',
-              style: TextStyle(color: LumenColors.muted),
+              'Entra como pendente. Você marca depois, se quiser.',
+              style: TextStyle(color: LumenColors.muted, fontSize: 13),
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 16),
+            const Text(
+              'Título',
+              style: TextStyle(
+                color: LumenColors.text,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 6),
             TextField(
               controller: _controller,
               autofocus: true,
               textInputAction: TextInputAction.done,
               onSubmitted: (_) => _submit(),
               decoration: InputDecoration(
-                labelText: 'Título',
                 hintText: 'Ex.: revisar calendário',
                 errorText: _error,
               ),
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 16),
             LumenButton(label: 'Adicionar à lista', onPressed: _submit),
-            TextButton(
+            const SizedBox(height: 8),
+            LumenButton(
+              label: 'Cancelar',
+              variant: LumenButtonVariant.outline,
               onPressed: () => Navigator.of(context).pop(),
-              child: const Center(
-                child: Text('Cancelar', style: TextStyle(color: LumenColors.muted)),
-              ),
             ),
           ],
         ),

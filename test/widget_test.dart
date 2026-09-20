@@ -14,7 +14,7 @@ void main() {
       ),
     );
 
-    expect(find.textContaining('LÚMEN'), findsOneWidget);
+    expect(find.textContaining('Lúmen'), findsOneWidget);
     expect(find.text('Cadastrar'), findsOneWidget);
     expect(find.text('Criar conta'), findsOneWidget);
     expect(find.text('Nome'), findsOneWidget);

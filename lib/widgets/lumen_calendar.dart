@@ -38,19 +38,19 @@ class LumenCalendar extends StatelessWidget {
       children: [
         Row(
           children: [
-            _NavButton(icon: Icons.chevron_left_rounded, onTap: onPreviousMonth),
+            _NavButton(icon: Icons.chevron_left, onTap: onPreviousMonth),
             Expanded(
               child: Text(
                 monthLabel[0].toUpperCase() + monthLabel.substring(1),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                   color: LumenColors.text,
                 ),
               ),
             ),
-            _NavButton(icon: Icons.chevron_right_rounded, onTap: onNextMonth),
+            _NavButton(icon: Icons.chevron_right, onTap: onNextMonth),
           ],
         ),
         const SizedBox(height: 12),
@@ -63,7 +63,8 @@ class LumenCalendar extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: LumenColors.muted,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
                   ),
                 ),
               ),
@@ -76,8 +77,8 @@ class LumenCalendar extends StatelessWidget {
           itemCount: total,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 7,
-            mainAxisSpacing: 6,
-            crossAxisSpacing: 6,
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 4,
           ),
           itemBuilder: (context, index) {
             final dayNumber = index - leading + 1;
@@ -110,12 +111,20 @@ class _NavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onTap,
-      icon: Icon(icon, color: LumenColors.text),
-      style: IconButton.styleFrom(
-        backgroundColor: LumenColors.glass,
-        shape: const CircleBorder(),
+    return SizedBox(
+      width: 32,
+      height: 32,
+      child: Material(
+        color: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(LumenTheme.radius),
+          side: const BorderSide(color: LumenColors.border),
+        ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(LumenTheme.radius),
+          child: Icon(icon, size: 18, color: LumenColors.text),
+        ),
       ),
     );
   }
@@ -143,53 +152,43 @@ class _DayCell extends StatelessWidget {
       label: 'Dia $day',
       selected: selected,
       child: InkWell(
-      onTap: onTap,
-      customBorder: const CircleBorder(),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: selected
-              ? const LinearGradient(
-                  colors: [LumenColors.teal, LumenColors.violet],
-                )
-              : null,
-          border: today && !selected
-              ? Border.all(color: LumenColors.pink.withValues(alpha: 0.8))
-              : null,
-          boxShadow: selected
-              ? [
-                  BoxShadow(
-                    color: LumenColors.teal.withValues(alpha: 0.45),
-                    blurRadius: 12,
-                  ),
-                ]
-              : null,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '$day',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                color: selected ? const Color(0xFF07101C) : LumenColors.text,
-              ),
-            ),
-            if (hasTasks)
-              Container(
-                width: 5,
-                height: 5,
-                margin: const EdgeInsets.only(top: 2),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: selected ? const Color(0xFF07101C) : LumenColors.pink,
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(LumenTheme.radius),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 140),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(LumenTheme.radius),
+            color: selected
+                ? LumenColors.primary
+                : today
+                    ? LumenColors.accent
+                    : Colors.transparent,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '$day',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
+                  color: selected ? LumenColors.primaryForeground : LumenColors.text,
                 ),
               ),
-          ],
+              if (hasTasks)
+                Container(
+                  width: 4,
+                  height: 4,
+                  margin: const EdgeInsets.only(top: 2),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: selected ? LumenColors.primaryForeground : LumenColors.muted,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
 }

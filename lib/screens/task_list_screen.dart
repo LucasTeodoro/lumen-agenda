@@ -25,22 +25,26 @@ class TaskListScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showAddTaskDialog(context, day),
-        backgroundColor: LumenColors.teal,
-        foregroundColor: const Color(0xFF07101C),
-        icon: const Icon(Icons.add),
-        label: const Text('Nova tarefa'),
+        backgroundColor: LumenColors.primary,
+        foregroundColor: LumenColors.primaryForeground,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(LumenTheme.radius),
+        ),
+        icon: const Icon(Icons.add, size: 18),
+        label: const Text('Nova tarefa', style: TextStyle(fontWeight: FontWeight.w500)),
       ),
       body: AuroraBackdrop(
         child: SafeArea(
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(8, 4, 20, 8),
+                padding: const EdgeInsets.fromLTRB(8, 8, 20, 8),
                 child: Row(
                   children: [
                     IconButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(Icons.arrow_back_rounded, color: LumenColors.text),
+                      icon: const Icon(Icons.arrow_back, color: LumenColors.text, size: 20),
                     ),
                     Expanded(
                       child: Column(
@@ -49,14 +53,14 @@ class TaskListScreen extends StatelessWidget {
                           Text(
                             heading[0].toUpperCase() + heading.substring(1),
                             style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                               color: LumenColors.text,
                             ),
                           ),
                           Text(
                             '${pending.length} pendente(s) · ${done.length} concluída(s)',
-                            style: const TextStyle(color: LumenColors.muted),
+                            style: const TextStyle(color: LumenColors.muted, fontSize: 13),
                           ),
                         ],
                       ),
@@ -106,13 +110,12 @@ class _SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8, top: 6),
+      padding: const EdgeInsets.only(bottom: 8, top: 8),
       child: Text(
-        label.toUpperCase(),
+        label,
         style: const TextStyle(
-          color: LumenColors.teal,
-          fontWeight: FontWeight.w800,
-          letterSpacing: 1.4,
+          color: LumenColors.muted,
+          fontWeight: FontWeight.w500,
           fontSize: 12,
         ),
       ),
@@ -131,21 +134,19 @@ class _EmptyTasks extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('✦', style: TextStyle(fontSize: 42, color: LumenColors.violet)),
-            SizedBox(height: 8),
             Text(
               'Nenhuma tarefa neste dia.',
               style: TextStyle(
                 color: LumenColors.text,
-                fontWeight: FontWeight.w700,
-                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
               ),
             ),
             SizedBox(height: 6),
             Text(
-              'Toque em Nova tarefa para acender a lista.',
+              'Toque em Nova tarefa para começar.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: LumenColors.muted),
+              style: TextStyle(color: LumenColors.muted, fontSize: 14),
             ),
           ],
         ),

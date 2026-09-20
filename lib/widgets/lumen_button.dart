@@ -7,42 +7,37 @@ class LumenButton extends StatelessWidget {
     super.key,
     required this.label,
     required this.onPressed,
+    this.variant = LumenButtonVariant.primary,
   });
 
   final String label;
   final VoidCallback? onPressed;
+  final LumenButtonVariant variant;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22),
-        gradient: const LinearGradient(
-          colors: [LumenColors.teal, LumenColors.violet, LumenColors.pink],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: LumenColors.teal.withValues(alpha: 0.28),
-            blurRadius: 18,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
+    final primary = variant == LumenButtonVariant.primary;
+    return SizedBox(
+      width: double.infinity,
+      height: 40,
       child: Material(
-        color: Colors.transparent,
+        color: primary ? LumenColors.primary : Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(LumenTheme.radius),
+          side: primary
+              ? BorderSide.none
+              : const BorderSide(color: LumenColors.border),
+        ),
         child: InkWell(
           onTap: onPressed,
-          borderRadius: BorderRadius.circular(22),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Center(
-              child: Text(
-                label,
-                style: const TextStyle(
-                  color: Color(0xFF07101C),
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 0.4,
-                ),
+          borderRadius: BorderRadius.circular(LumenTheme.radius),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: primary ? LumenColors.primaryForeground : LumenColors.text,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
               ),
             ),
           ),
@@ -51,3 +46,5 @@ class LumenButton extends StatelessWidget {
     );
   }
 }
+
+enum LumenButtonVariant { primary, outline }
