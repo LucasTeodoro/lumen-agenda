@@ -7,6 +7,7 @@ import '../state/task_store.dart';
 import '../theme/lumen_theme.dart';
 import '../widgets/add_task_dialog.dart';
 import '../widgets/aurora_backdrop.dart';
+import '../widgets/confirm_delete_dialog.dart';
 import '../widgets/task_tile.dart';
 
 class TaskListScreen extends StatelessWidget {
@@ -25,7 +26,7 @@ class TaskListScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showAddTaskDialog(context, day),
-        backgroundColor: LumenColors.primary,
+        backgroundColor: LumenColors.teal,
         foregroundColor: LumenColors.primaryForeground,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -97,7 +98,12 @@ class TaskListScreen extends StatelessWidget {
     return TaskTile(
       task: task,
       onToggle: () => store.toggle(task.id),
-      onRemove: () => store.remove(task.id),
+      onRemove: () async {
+        final confirmed = await confirmDeleteTask(context, task.title);
+        if (confirmed) {
+          await store.remove(task.id);
+        }
+      },
     );
   }
 }
@@ -114,8 +120,8 @@ class _SectionTitle extends StatelessWidget {
       child: Text(
         label,
         style: const TextStyle(
-          color: LumenColors.muted,
-          fontWeight: FontWeight.w500,
+          color: LumenColors.teal,
+          fontWeight: FontWeight.w600,
           fontSize: 12,
         ),
       ),

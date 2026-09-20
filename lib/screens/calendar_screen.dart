@@ -76,8 +76,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     child: const Text(
                       'Sair',
                       style: TextStyle(
-                        color: LumenColors.muted,
-                        fontWeight: FontWeight.w500,
+                        color: LumenColors.pink,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),

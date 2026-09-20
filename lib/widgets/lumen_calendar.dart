@@ -159,9 +159,9 @@ class _DayCell extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(LumenTheme.radius),
             color: selected
-                ? LumenColors.primary
+                ? LumenColors.teal
                 : today
-                    ? LumenColors.accent
+                    ? LumenColors.violet.withValues(alpha: 0.35)
                     : Colors.transparent,
           ),
           child: Column(
@@ -182,7 +182,7 @@ class _DayCell extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 2),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: selected ? LumenColors.primaryForeground : LumenColors.muted,
+                    color: selected ? LumenColors.primaryForeground : LumenColors.pink,
                   ),
                 ),
             ],

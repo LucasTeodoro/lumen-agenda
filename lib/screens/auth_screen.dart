@@ -245,15 +245,15 @@ class _ModeToggle extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
-            color: active ? LumenColors.background : Colors.transparent,
+            color: active ? LumenColors.teal : Colors.transparent,
           ),
           child: Text(
             label,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               fontSize: 13,
-              color: active ? LumenColors.text : LumenColors.muted,
+              color: active ? LumenColors.primaryForeground : LumenColors.muted,
             ),
           ),
         ),

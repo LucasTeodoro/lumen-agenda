@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class LumenColors {
-  static const background = Color(0xFF09090B);
-  static const card = Color(0xFF18181B);
-  static const border = Color(0xFF27272A);
-  static const text = Color(0xFFFAFAFA);
-  static const muted = Color(0xFFA1A1AA);
-  static const primary = Color(0xFFFAFAFA);
-  static const primaryForeground = Color(0xFF18181B);
-  static const accent = Color(0xFF27272A);
-  static const destructive = Color(0xFFEF4444);
-  static const ring = Color(0xFFD4D4D8);
+  static const background = Color(0xFF070B18);
+  static const card = Color(0xCC0E1530);
+  static const border = Color(0x5530E5C8);
+  static const text = Color(0xFFF4F7FF);
+  static const muted = Color(0xFF8B93B0);
+  static const teal = Color(0xFF00E5C0);
+  static const violet = Color(0xFF7B61FF);
+  static const pink = Color(0xFFFF4D8D);
+  static const primary = teal;
+  static const primaryForeground = Color(0xFF04120F);
+  static const accent = Color(0xFF1A1540);
+  static const destructive = pink;
+  static const ring = teal;
 }
 
 class LumenTheme {
@@ -19,13 +22,14 @@ class LumenTheme {
 
   static ThemeData dark() {
     const scheme = ColorScheme.dark(
-      primary: LumenColors.primary,
+      primary: LumenColors.teal,
       onPrimary: LumenColors.primaryForeground,
-      secondary: LumenColors.accent,
+      secondary: LumenColors.violet,
       onSecondary: LumenColors.text,
+      tertiary: LumenColors.pink,
       surface: LumenColors.background,
       onSurface: LumenColors.text,
-      error: LumenColors.destructive,
+      error: LumenColors.pink,
       outline: LumenColors.border,
     );
     return ThemeData(
@@ -53,7 +57,7 @@ class LumenTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: LumenColors.background,
+        fillColor: const Color(0x33070B18),
         hintStyle: const TextStyle(color: LumenColors.muted, fontSize: 14),
         labelStyle: const TextStyle(color: LumenColors.muted, fontSize: 14),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
@@ -67,15 +71,15 @@ class LumenTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius),
-          borderSide: const BorderSide(color: LumenColors.ring, width: 1.5),
+          borderSide: const BorderSide(color: LumenColors.teal, width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius),
-          borderSide: const BorderSide(color: LumenColors.destructive),
+          borderSide: const BorderSide(color: LumenColors.pink),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius),
-          borderSide: const BorderSide(color: LumenColors.destructive),
+          borderSide: const BorderSide(color: LumenColors.pink),
         ),
       ),
     );
