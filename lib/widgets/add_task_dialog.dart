@@ -51,7 +51,9 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
         borderRadius: BorderRadius.circular(LumenTheme.cardRadius),
         side: const BorderSide(color: LumenColors.border),
       ),
-      child: Padding(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 420),
+        child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -100,6 +102,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

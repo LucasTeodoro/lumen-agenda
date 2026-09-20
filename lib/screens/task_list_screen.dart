@@ -8,6 +8,7 @@ import '../theme/lumen_theme.dart';
 import '../widgets/add_task_dialog.dart';
 import '../widgets/aurora_backdrop.dart';
 import '../widgets/confirm_delete_dialog.dart';
+import '../widgets/page_shell.dart';
 import '../widgets/task_tile.dart';
 
 class TaskListScreen extends StatelessWidget {
@@ -24,69 +25,88 @@ class TaskListScreen extends StatelessWidget {
     final heading = DateFormat("EEEE, d 'de' MMMM", 'pt_BR').format(day);
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => showAddTaskDialog(context, day),
-        backgroundColor: LumenColors.teal,
-        foregroundColor: LumenColors.primaryForeground,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(LumenTheme.radius),
-        ),
-        icon: const Icon(Icons.add, size: 18),
-        label: const Text('Nova tarefa', style: TextStyle(fontWeight: FontWeight.w500)),
-      ),
       body: AuroraBackdrop(
         child: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 20, 8),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(Icons.arrow_back, color: LumenColors.text, size: 20),
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            heading[0].toUpperCase() + heading.substring(1),
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: LumenColors.text,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: PageShell.widthFor(context)),
+              child: Stack(
+                children: [
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 8, 12, 8),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              icon: const Icon(Icons.arrow_back, color: LumenColors.text, size: 20),
                             ),
-                          ),
-                          Text(
-                            '${pending.length} pendente(s) · ${done.length} concluída(s)',
-                            style: const TextStyle(color: LumenColors.muted, fontSize: 13),
-                          ),
-                        ],
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    heading[0].toUpperCase() + heading.substring(1),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: LumenColors.text,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${pending.length} pendente(s) · ${done.length} concluída(s)',
+                                    style: const TextStyle(color: LumenColors.muted, fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: tasks.isEmpty
+                            ? const _EmptyTasks()
+                            : ListView(
+                                padding: const EdgeInsets.fromLTRB(20, 8, 20, 96),
+                                children: [
+                                  if (pending.isNotEmpty) ...[
+                                    const _SectionTitle(label: 'Pendentes'),
+                                    ...pending.map((task) => _tile(context, task)),
+                                  ],
+                                  if (done.isNotEmpty) ...[
+                                    const _SectionTitle(
+                                      label: 'Concluídas',
+                                      muted: true,
+                                    ),
+                                    ...done.map((task) => _tile(context, task)),
+                                  ],
+                                ],
+                              ),
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    right: 20,
+                    bottom: 20,
+                    child: FloatingActionButton.extended(
+                      onPressed: () => showAddTaskDialog(context, day),
+                      backgroundColor: LumenColors.teal,
+                      foregroundColor: LumenColors.primaryForeground,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(LumenTheme.radius),
+                      ),
+                      icon: const Icon(Icons.add, size: 18),
+                      label: const Text(
+                        'Nova tarefa',
+                        style: TextStyle(fontWeight: FontWeight.w500),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: tasks.isEmpty
-                    ? const _EmptyTasks()
-                    : ListView(
-                        padding: const EdgeInsets.fromLTRB(20, 8, 20, 96),
-                        children: [
-                          if (pending.isNotEmpty) ...[
-                            const _SectionTitle(label: 'Pendentes'),
-                            ...pending.map((task) => _tile(context, task)),
-                          ],
-                          if (done.isNotEmpty) ...[
-                            const _SectionTitle(label: 'Concluídas'),
-                            ...done.map((task) => _tile(context, task)),
-                          ],
-                        ],
-                      ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -109,9 +129,10 @@ class TaskListScreen extends StatelessWidget {
 }
 
 class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.label});
+  const _SectionTitle({required this.label, this.muted = false});
 
   final String label;
+  final bool muted;
 
   @override
   Widget build(BuildContext context) {
@@ -119,8 +140,8 @@ class _SectionTitle extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8, top: 8),
       child: Text(
         label,
-        style: const TextStyle(
-          color: LumenColors.teal,
+        style: TextStyle(
+          color: muted ? LumenColors.muted : LumenColors.teal,
           fontWeight: FontWeight.w600,
           fontSize: 12,
         ),
